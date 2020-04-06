@@ -1,6 +1,6 @@
 # F1 Analysis Tracker
 
-![alt text](/Users/dshaw/Pictures/lewisham1.jpg "Title")
+![alt text](/Users/jamie/Pictures/F1.png "Title")
 
 ### Google trends to track the most popular driver
 
