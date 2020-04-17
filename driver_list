@@ -1,8 +1,12 @@
 import os
 import pandas as pd
 import numpy as np
+import csv
 
-driver_list = ['Lewis Hamilton','Valtteri Bottas','Sebastian Vettel','Charles Leclerc','Pierre Gasly','Max Verstappen','Daniel Ricardo','Nico Hulkenberg','Romain Grosjean','Kevin Magnussen','Lando Norris','Carlos Sainz','Sergio Perez','Lance Stroll','Kimi Raikkonen','Antonio Giovinazzi','Alexander Albon','Daniil Kvyat','George Russel','Robert Kubica']
-driver_no = ['#44','#77','#5','#16','#10','#33','#3','#27','#8','#20','#4','#55','#11','#18','#7','#99','#23','#26','#63','#88']
+driver_list = ['Driver Name','Lewis Hamilton','Valtteri Bottas','Sebastian Vettel','Charles Leclerc','Pierre Gasly','Max Verstappen','Daniel Ricardo','Nico Hulkenberg','Romain Grosjean','Kevin Magnussen','Lando Norris','Carlos Sainz','Sergio Perez','Lance Stroll','Kimi Raikkonen','Antonio Giovinazzi','Alexander Albon','Daniil Kvyat','George Russel','Robert Kubica']
+driver_no = ['Driver Number',44,77,5,16,10,33,3,27,8,20,4,55,11,18,7,99,23,26,63,88]
 
-np.savetxt('driver_new.csv', [p for p in(driver_list)], delimiter=',', fmt='%s')
+np.savetxt('driver+num.csv', [p for p in zip(driver_list,driver_no)], delimiter=',', fmt='%s')
+
+pd.read_csv('drive.csv')
+pd.read_csv('driver+num.csv')

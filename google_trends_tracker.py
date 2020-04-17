@@ -21,22 +21,25 @@ lew = df['Lewis Hamilton']>0
 
 ric = df['Daniel Ricardo']>0
 
-lew
+vet = df['Sebastian Vettel']>0
 
-ric
+df[df['Lewis Hamilton']>0].sum()
 
 df.columns[0]
 
-df['total_searches']= df.sum(axis=1)
+list(df.axes[1])
 
-df.sort_values('Lewis Hamilton', ascending=False).head()
+#df['total_searches']= df.sum(axis=1)
 
-df[df['total_searches']>0]
+df.sort_values('total_searches', ascending=False).head()
+
+df[df['total_searches']>0].sum()
 
 df['Lewis Hamilton'].sum()
 
 df['Daniel Ricardo'].sum()
 
+#Same as above but a bit simpler
 df.sum()
 
 dir(pytrend)
@@ -56,3 +59,40 @@ df_overtime2018.plot(figsize=(20,10))
 
 # Find the sum of searched during that year.
 df_overtime2018.sum()
+
+# Sum of all the countries that searched for Lewis Hamilton
+lew.sum()
+
+#Get a list of all the countries that searched for Hammi.
+lewdf = df[lew]
+print(lewdf.axes[0])
+
+# Put all the countries and searches into a bar graph.
+lewdf.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(20,10), kind='bar')
+
+
+
+# Sum of all the countries that searched for Daniel Ricardo
+ric.sum()
+
+
+
+
+#Sum of all the countries that searched for Sebastian Vettel
+vet.sum()
+
+
+
+type(df)
+
+driver_search = pd.DataFrame()
+for k in df.keys():
+    print(k)
+    df_most_searched = df[k]
+
+
+
+
+df.sort_values(df.columns[0], ascending=False)
+
+df.shape
