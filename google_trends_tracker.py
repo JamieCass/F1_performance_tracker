@@ -91,8 +91,12 @@ for k in df.keys():
     df_most_searched = df[k]
 
 
+drivers_new = [d for d in df.keys()]
 
+df_d = df[drivers_new]
+df_d
+df_d.plot (figsize=(20,10))
+
+print(drivers_new)
 
 df.sort_values(df.columns[0], ascending=False)
-
-df.shape
