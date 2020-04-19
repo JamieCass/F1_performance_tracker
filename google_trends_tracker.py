@@ -94,8 +94,8 @@ for k in df.keys():
 drivers_new = [d for d in df.keys()]
 
 df_d = df[drivers_new]
-df_d
-df_d.plot (figsize=(20,10))
+df_d.sort_values(df_d.columns[2], ascending=False)
+df_d.plot (x = df_d.axes[0], figsize=(20,10))
 
 print(drivers_new)
 
