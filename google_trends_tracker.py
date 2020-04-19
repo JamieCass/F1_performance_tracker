@@ -32,6 +32,8 @@ lew.sum()
 # Put all the countries and searches into a bar graph.
 lewdf.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(20,10))
 
+# this shows us that hammi was searched a lot after his win in Abu Dhabi and rosberg still won!
+df_overtime.sort_values('Lewis Hamilton', ascending=False)
 
 ############################
 
@@ -78,9 +80,12 @@ df.sum()
 
 dir(pytrend)
 
-# look at interest over time between all 3 drivers.
+# look at interest over time between all 5 drivers.
 df_overtime = pytrend.interest_over_time()
 df_overtime
+
+# we can see max verstappen was searched a lot after his first win in Spain!!
+df_overtime.sort_values('Max Verstappen', ascending=False)
 # plot into a graph.
 df_overtime.plot(figsize=(20,10))
 
@@ -104,7 +109,7 @@ ric.sum()
 
 
 #Sum of all the countries that searched for Sebastian Vettel
-
+vet.sum()
 
 
 type(df)
