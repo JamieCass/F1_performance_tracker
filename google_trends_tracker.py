@@ -5,7 +5,7 @@ import csv
 
 from pytrends.request import TrendReq
 pytrend = TrendReq()
-pytrend.build_payload(kw_list=['Lewis Hamilton','Daniel Ricardo','Sebastian Vettel'])
+pytrend.build_payload(kw_list=['Lewis Hamilton','Daniel Ricardo','Sebastian Vettel','Charles Leclerc','Max Verstappen'])
 # Interest by Region
 df = pytrend.interest_by_region()
 df.head(10)
@@ -17,11 +17,42 @@ df.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(120, 10), kind='
 
 df[df['Lewis Hamilton']>0]
 
+df['Lewis Hamilton'].sum()
+
 lew = df['Lewis Hamilton']>0
+
+#Get a list of all the countries that searched for Hammi.
+
+lewdf = df[lew]
+print(lewdf.axes[0])
+
+# Sum of all the countries that searched for Lewis Hamilton
+lew.sum()
+
+# Put all the countries and searches into a bar graph.
+lewdf.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(20,10))
+
+
+############################
 
 ric = df['Daniel Ricardo']>0
 
+
+############################
+
 vet = df['Sebastian Vettel']>0
+
+############################
+
+max = df['Max Verstappen']>0
+maxdf = df[max]
+
+maxdf.axes[0]
+maxdf.reset_index().plot(x='geoName', y='Max Verstappen', figsize=(20,10))
+
+maxdf.plot(figsize=(20,10))
+
+############################
 
 df[df['Lewis Hamilton']>0].sum()
 
@@ -35,9 +66,12 @@ df.sort_values('total_searches', ascending=False).head()
 
 df[df['total_searches']>0].sum()
 
-df['Lewis Hamilton'].sum()
+
 
 df['Daniel Ricardo'].sum()
+
+df['Max Verstappen'].sum()
+
 
 #Same as above but a bit simpler
 df.sum()
@@ -60,15 +94,6 @@ df_overtime2018.plot(figsize=(20,10))
 # Find the sum of searched during that year.
 df_overtime2018.sum()
 
-# Sum of all the countries that searched for Lewis Hamilton
-lew.sum()
-
-#Get a list of all the countries that searched for Hammi.
-lewdf = df[lew]
-print(lewdf.axes[0])
-
-# Put all the countries and searches into a bar graph.
-lewdf.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(20,10), kind='bar')
 
 
 
@@ -79,7 +104,6 @@ ric.sum()
 
 
 #Sum of all the countries that searched for Sebastian Vettel
-vet.sum()
 
 
 
@@ -94,8 +118,8 @@ for k in df.keys():
 drivers_new = [d for d in df.keys()]
 
 df_d = df[drivers_new]
-df_d.sort_values(df_d.columns[2], ascending=False)
-df_d.plot (x = df_d.axes[0], figsize=(20,10))
+df_d.sort_values(df_d.columns[4], ascending=False)
+df_d.plot (figsize=(20,10))
 
 print(drivers_new)
 
