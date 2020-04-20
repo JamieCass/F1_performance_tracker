@@ -35,6 +35,10 @@ lewdf.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(20,10))
 # this shows us that hammi was searched a lot after his win in Abu Dhabi and rosberg still won!
 df_overtime.sort_values('Lewis Hamilton', ascending=False)
 
+# this graph pretty much show the searches peak everytime hammi won the chamionship.
+df_overtime.plot( y='Lewis Hamilton', figsize=(20,10))
+
+
 ############################
 
 ric = df['Daniel Ricardo']>0
@@ -93,6 +97,17 @@ df_overtime.plot(figsize=(20,10))
 
 df_overtime2018 = df_overtime['2018-01-01':'2019-01-01']
 
+ham_max = df_overtime[['Max Verstappen', 'Lewis Hamilton']]
+
+#Graph to show hammi and max searches from 2015 onwards.
+ham_max.plot(figsize=(20,10))
+
+ham_max_overtime = df_overtime2018[['Max Verstappen','Lewis Hamilton']]
+
+#Graph showing just max and hammi searches in 2018
+ham_max_overtime.plot(figsize=(20,10))
+# max got searched a lot after getting 2nd at Brazil and also when he won at Austria.
+df_overtime2018.sort_values('Max Verstappen', ascending=False)
 # Plot into a graph
 df_overtime2018.plot(figsize=(20,10))
 
