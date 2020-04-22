@@ -5,16 +5,29 @@ import csv
 from pytrends.request import TrendReq
 import time
 import datetime
-# from pytrends.request import TrendReq
-# pytrend = TrendReq()
-# pytrend.build_payload(kw_list=['Lewis Hamilton','Daniel Ricardo','Sebastian Vettel','Charles Leclerc','Max Verstappen'])
+
+
+
+###############################
+# Time and Date code
+###############################
+
+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
 
 DATE = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%y')
 
 DATE
 
+
+###############################
+# pytrend and driver list
+###############################
+
 pytrend = TrendReq()
 driver_list = ['Lewis Hamilton','Valtteri Bottas','Sebastian Vettel','Charles Leclerc','Pierre Gasly','Max Verstappen','Daniel Ricardo','Nico Hulkenberg','Romain Grosjean','Kevin Magnussen','Lando Norris','Carlos Sainz','Sergio Perez','Lance Stroll','Kimi Raikkonen','Antonio Giovinazzi','Alexander Albon','Daniil Kvyat','George Russel','Robert Kubica']
+
+
 total_drivers = len(driver_list)
 # Number of times we need to loop over
 max_google_request = 5
@@ -39,16 +52,9 @@ for i in range(iter):
     # CHECK
     print('COMPLETE:',print(iter_drivers))
     # SAVE
-    #full_results_region.to_csv('full_results_region.csv',index=False)
-
-datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
-
-
+    # full_results_region.to_csv('full_results_region.csv',index=False)
 
 iter_drivers
-
-
 
 
 full_results_overtime = full_results_overtime.append(df_interest_over_time)
@@ -59,10 +65,9 @@ full_results_region
 full_results_overtime
 
 
-datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
-
-
+###############################
+# pytrend and team list
+###############################
 
 teamtrend = TrendReq()
 teamtrend.build_payload(kw_list=['Mercedes','Ferrari','Red Bull','Renault'])
@@ -70,14 +75,23 @@ teamtrend.build_payload(kw_list=['Mercedes','Ferrari','Red Bull','Renault'])
 df = pytrend.interest_by_region()
 df.head(10)
 
-# bar chart for all geoNames and searches.
-df.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(120, 10), kind='bar')
-
 construstors=teamtrend.interest_by_region()
 construstors.plot(figsize=(20,10))
+
+
+###############################
+# Lewis Hamilton
+###############################
+
 # How many countries search for Lewis Hamilton?
 
+#bar chart for all geoNames and searches.
+df.reset_index().plot(x='geoName', y='Lewis Hamilton', figsize=(120, 10), kind='bar')
+
+
 df[df['Lewis Hamilton']>0]
+
+df[df['Lewis Hamilton']>0].sum()
 
 df['Lewis Hamilton'].sum()
 
@@ -101,16 +115,28 @@ df_overtime.sort_values('Lewis Hamilton', ascending=False)
 df_overtime.plot( y='Lewis Hamilton', figsize=(20,10))
 
 
-############################
+
+###############################
+# Daniel Ricardo
+###############################
 
 ric = df['Daniel Ricardo']>0
 
+# Sum of all the countries that searched for Daniel Ricardo
+ric.sum()
 
-############################
+###############################
+# Sebastian Vettel
+###############################
 
 vet = df['Sebastian Vettel']>0
 
-############################
+#Sum of all the countries that searched for Sebastian Vettel
+vet.sum()
+
+###############################
+# Max Verstappen
+###############################
 
 max = df['Max Verstappen']>0
 maxdf = df[max]
@@ -120,9 +146,13 @@ maxdf.reset_index().plot(x='geoName', y='Max Verstappen', figsize=(20,10))
 
 maxdf.plot(figsize=(20,10))
 
-############################
+df['Max Verstappen'].sum()
 
-df[df['Lewis Hamilton']>0].sum()
+
+
+###############################
+# Play around area to see if stuff works and see what it does.
+###############################
 
 df.columns[0]
 
@@ -137,8 +167,6 @@ df[df['total_searches']>0].sum()
 
 
 df['Daniel Ricardo'].sum()
-
-df['Max Verstappen'].sum()
 
 
 #Same as above but a bit simpler
@@ -158,6 +186,11 @@ df_overtime.sort_values('Max Verstappen', ascending=False)
 df_overtime.plot(figsize=(20,10))
 
 # Search for specific time frame.
+
+
+###############################
+# Hammi vs Max stuff
+###############################
 
 df_overtime2018 = df_overtime['2018-01-01':'2019-01-01']
 
@@ -180,17 +213,9 @@ df_overtime2018.plot(figsize=(20,10))
 df_overtime2018.sum()
 
 
-
-
-# Sum of all the countries that searched for Daniel Ricardo
-ric.sum()
-
-
-
-
-#Sum of all the countries that searched for Sebastian Vettel
-vet.sum()
-
+###############################
+# All drivers graph and other bits
+###############################
 
 type(df)
 
