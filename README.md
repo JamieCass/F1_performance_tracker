@@ -18,4 +18,4 @@
  - create a django webpage˜
 
 ###### Useful links
-https://www.kaggle.com/cjgdev/formula-1-race-data-19502017
+https://www.kaggle.com/cjgdev/formula-1-race-data-1950201

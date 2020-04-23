@@ -8,9 +8,9 @@ import datetime
 
 
 
-###############################
+##############################################################
 # Time and Date code
-###############################
+##############################################################
 
 datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
@@ -20,9 +20,9 @@ DATE = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%y')
 DATE
 
 
-###############################
+##############################################################
 # pytrend and driver list
-###############################
+##############################################################
 
 pytrend = TrendReq()
 driver_list = ['Lewis Hamilton','Valtteri Bottas','Sebastian Vettel','Charles Leclerc','Pierre Gasly','Max Verstappen','Daniel Ricardo','Nico Hulkenberg','Romain Grosjean','Kevin Magnussen','Lando Norris','Carlos Sainz','Sergio Perez','Lance Stroll','Kimi Raikkonen','Antonio Giovinazzi','Alexander Albon','Daniil Kvyat','George Russel','Robert Kubica']
@@ -47,27 +47,74 @@ for i in range(iter):
     #df_interest_over_time = pytrend.interest_over_time()
     # APPEND TO FULL RESULTS
     full_results_region = full_results_region.append(df.T)
-    full_results_region['datetime'] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
+    full_results_region['datetime'] = DATE
     print('full_results len',len(full_results_region))
     # CHECK
     print('COMPLETE:',print(iter_drivers))
     # SAVE
     # full_results_region.to_csv('full_results_region.csv',index=False)
-
 iter_drivers
 
 
 full_results_overtime = full_results_overtime.append(df_interest_over_time)
 df_interest_over_time.drop(['isPartial'], axis=1)
-full_results_region
 
+full_results_region
 
 full_results_overtime
 
 
-###############################
+##############################################################
+# save driver list to csv.
+##############################################################
+
+pd.DataFrame(driver_list,columns=['driver_name']).to_csv('full_driver_list.csv')
+print(pd.read_csv.__doc__)
+pd.read_csv('driver_new.csv',header=None)
+
+##################################################
+# SHOWING JOINS
+##################################################
+
+pytrend.build_payload(kw_list=driver_list[0:0+diff])
+df_interest_over_time_A = pytrend.interest_over_time().drop(['isPartial'],axis=1)
+df_interest_over_time_A.head()
+pytrend.build_payload(kw_list=driver_list[5:5+diff])
+df_interest_over_time_B = pytrend.interest_over_time().drop(['isPartial'],axis=1)
+df_interest_over_time_B.head()
+# Join them instead of transpose and append
+# df_joined = pd.merge(df_interest_over_time_A, df_interest_over_time_B, left_on='colname', right_on='colname', how='inner')
+df_joined = pd.merge(df_interest_over_time_A, df_interest_over_time_B, left_index=True, right_index=True, how='inner')
+df_joined.head()
+# Check they are the same length
+len(df_interest_over_time_A), len(df_interest_over_time_B)
+
+##############################################################
+# other way of doing it
+##############################################################
+
+groupkeywords = list(zip(*[iter(driver_list)]*1))
+groupkeywords = [list(x) for x in groupkeywords]
+
+dicti = {}
+dic_overtime = {}
+i = 1
+for trending in groupkeywords[0:2]:
+	pytrend.build_payload(kw_list=trending)
+	print(trending)
+	dicti[i] = pytrend.interest_by_region()
+	dic_overtime[i] = pytrend.interest_over_time().drop(['isPartial'],axis=1)
+	i+=1
+
+dicti[1]
+
+
+
+
+
+##############################################################
 # pytrend and team list
-###############################
+##############################################################
 
 teamtrend = TrendReq()
 teamtrend.build_payload(kw_list=['Mercedes','Ferrari','Red Bull','Renault'])
@@ -79,9 +126,9 @@ construstors=teamtrend.interest_by_region()
 construstors.plot(figsize=(20,10))
 
 
-###############################
+##############################################################
 # Lewis Hamilton
-###############################
+##############################################################
 
 # How many countries search for Lewis Hamilton?
 
@@ -116,27 +163,27 @@ df_overtime.plot( y='Lewis Hamilton', figsize=(20,10))
 
 
 
-###############################
+##############################################################
 # Daniel Ricardo
-###############################
+##############################################################
 
 ric = df['Daniel Ricardo']>0
 
 # Sum of all the countries that searched for Daniel Ricardo
 ric.sum()
 
-###############################
+##############################################################
 # Sebastian Vettel
-###############################
+##############################################################
 
 vet = df['Sebastian Vettel']>0
 
 #Sum of all the countries that searched for Sebastian Vettel
 vet.sum()
 
-###############################
+##############################################################
 # Max Verstappen
-###############################
+##############################################################
 
 max = df['Max Verstappen']>0
 maxdf = df[max]
@@ -150,9 +197,9 @@ df['Max Verstappen'].sum()
 
 
 
-###############################
+##############################################################
 # Play around area to see if stuff works and see what it does.
-###############################
+##############################################################
 
 df.columns[0]
 
@@ -188,9 +235,9 @@ df_overtime.plot(figsize=(20,10))
 # Search for specific time frame.
 
 
-###############################
+##############################################################
 # Hammi vs Max stuff
-###############################
+##############################################################
 
 df_overtime2018 = df_overtime['2018-01-01':'2019-01-01']
 
@@ -213,9 +260,9 @@ df_overtime2018.plot(figsize=(20,10))
 df_overtime2018.sum()
 
 
-###############################
+##############################################################
 # All drivers graph and other bits
-###############################
+##############################################################
 
 type(df)
 
