@@ -27,41 +27,60 @@ DATE
 pytrend = TrendReq()
 driver_list = ['Lewis Hamilton','Valtteri Bottas','Sebastian Vettel','Charles Leclerc','Pierre Gasly','Max Verstappen','Daniel Ricardo','Nico Hulkenberg','Romain Grosjean','Kevin Magnussen','Lando Norris','Carlos Sainz','Sergio Perez','Lance Stroll','Kimi Raikkonen','Antonio Giovinazzi','Alexander Albon','Daniil Kvyat','George Russel','Robert Kubica']
 
+def trackerfunc(driver_list, verbose=1):
+    '''
+    This function looks into what F1 drivers get searched in which reason and how often.
 
-total_drivers = len(driver_list)
-# Number of times we need to loop over
-max_google_request = 5
-iter = int(total_drivers/max_google_request)
-# Difference we need to add every time
-diff = int(total_drivers/iter)
-# Set an empty df
-full_results_region = pd.DataFrame()
-counter = 0
-for i in range(iter):
-    iter_drivers = driver_list[counter:counter+diff]
-    print('COMPLETE:',print(iter_drivers))
-    counter+=diff
-    pytrend.build_payload(kw_list=iter_drivers)
-    df_region = pytrend.interest_by_region()
-    ## Can add other things to the payload
-    #df_interest_over_time = pytrend.interest_over_time()
-    # APPEND TO FULL RESULTS
-    full_results_region = full_results_region.append(df.T)
-    full_results_region['datetime'] = DATE
-    print('full_results len',len(full_results_region))
-    # CHECK
-    print('COMPLETE:',print(iter_drivers))
-    # SAVE
-    # full_results_region.to_csv('full_results_region.csv',index=False)
-iter_drivers
+    params
+    ---------
+    driver_list:list of drivers
+    '''
+    if verbose>1:
+        print('Starting trackerfunc')
+    total_drivers = len(driver_list)
+    # Number of times we need to loop over
+    max_google_request = 5
+    iter = int(total_drivers/max_google_request)
+    # Difference we need to add every time
+    diff = int(total_drivers/iter)
+    # Set an empty df
+    full_results_region = pd.DataFrame()
+    counter = 0
+    for i in range(iter):
+        pytrend = TrendReq()
+        iter_drivers = driver_list[counter:counter+diff]
+        #print('COMPLETE:',iter_drivers)
+        counter+=diff
+        time.sleep(10)
+        try:
+            pytrend.build_payload(kw_list=iter_drivers)
+            df_region = pytrend.interest_by_region()
+            ## Can add other things to the payload
+            #df_interest_over_time = pytrend.interest_over_time()
+            # APPEND TO FULL RESULTS
+            full_results_region = full_results_region.append(df_region.T)
+            full_results_region['datetime'] = DATE
+            print('full_results len',len(full_results_region))
+            # CHECK
+            print('COMPLETE:',iter_drivers)
+        except:
+            print ('ERROR',len(iter_drivers))
+        # SAVE
+        # full_results_region.to_csv('full_results_region.csv',index=False)
+    return full_results_region
+
+
+##############################################################
+# Lets see if it works
+##############################################################
+
+trackerfunc(driver_list, verbose=1)
+
+
 
 
 full_results_overtime = full_results_overtime.append(df_interest_over_time)
 df_interest_over_time.drop(['isPartial'], axis=1)
-
-full_results_region
-
-full_results_overtime
 
 
 ##############################################################
@@ -89,6 +108,7 @@ df_joined.head()
 # Check they are the same length
 len(df_interest_over_time_A), len(df_interest_over_time_B)
 
+
 ##############################################################
 # other way of doing it
 ##############################################################
@@ -107,8 +127,6 @@ for trending in groupkeywords[0:2]:
 	i+=1
 
 dicti[1]
-
-
 
 
 
