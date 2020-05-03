@@ -29,7 +29,7 @@ driver_list = ['Lewis Hamilton','Valtteri Bottas','Sebastian Vettel','Charles Le
 
 def trackerfunc(driver_list, verbose=1):
     '''
-    This function looks into what F1 drivers get searched in which reason and how often.
+    This function looks into what F1 drivers get searched in which region and how often.
 
     params
     ---------
@@ -58,7 +58,7 @@ def trackerfunc(driver_list, verbose=1):
             ## Can add other things to the payload
             #df_interest_over_time = pytrend.interest_over_time()
             # APPEND TO FULL RESULTS
-            full_results_region = full_results_region.append(df_region.T)
+            full_results_region = full_results_region.append(df_region)
             full_results_region['datetime'] = DATE
             print('full_results len',len(full_results_region))
             # CHECK
@@ -74,7 +74,7 @@ def trackerfunc(driver_list, verbose=1):
 # Lets see if it works
 ##############################################################
 
-trackerfunc(driver_list, verbose=1)
+trackerfunc(driver_list, verbose=2)
 
 
 
