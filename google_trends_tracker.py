@@ -136,6 +136,7 @@ dicti[1]
 
 teamtrend = TrendReq()
 teamtrend.build_payload(kw_list=['Mercedes','Ferrari','Red Bull','Renault'])
+merc=teamtrend[teamtrend['Mercedes']>0]
 # Interest by Region
 df = pytrend.interest_by_region()
 df.head(10)
